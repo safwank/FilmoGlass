@@ -1,0 +1,31 @@
+apply plugin: 'groovy'
+
+dependencies {
+  compile files('libs/gdk.jar')
+  compile project(':app')
+  compile project(':app').configurations.compile.dependencies
+  compile fileTree(dir: project(':app').file('build/libs'), include: '*.jar')
+
+  compile 'org.codehaus.groovy:groovy:2.4.0-beta-3'
+  compile 'org.spockframework:spock-core:0.7-groovy-2.0'
+  compile 'org.robospock:robospock:0.4.4'
+}
+
+sourceSets {
+  main {
+    groovy {
+      srcDirs '../app/src/main/groovy',
+              '../app/build/generated/source/r/debug'
+    }
+  }
+}
+
+test {
+  testLogging {
+    lifecycle {
+      exceptionFormat 'full'
+    }
+  }
+
+  workingDir = '../app/src/main'
+}
