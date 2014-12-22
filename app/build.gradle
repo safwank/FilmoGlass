@@ -58,4 +58,5 @@ dependencies {
   compile 'com.netflix.rxjava:rxjava-core:0.20.7'
   compile 'com.netflix.rxjava:rxjava-android:0.20.7'
   compile 'com.squareup.retrofit:retrofit:1.8.0'
+  compile 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
 }

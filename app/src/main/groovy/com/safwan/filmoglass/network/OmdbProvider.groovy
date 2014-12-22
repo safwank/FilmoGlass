@@ -2,9 +2,11 @@ package com.safwan.filmoglass.network
 
 import com.safwan.filmoglass.models.Criteria
 import com.safwan.filmoglass.models.Film
+import groovy.transform.CompileStatic
 import retrofit.RestAdapter
 import rx.Observable
 
+@CompileStatic
 class OmdbProvider implements RatingProvider {
 
   @Override

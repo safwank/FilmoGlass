@@ -3,6 +3,7 @@
 
     <string name="app_name">FilmoGlass</string>
     <string name="title_activity_live_card_service">Hello World LiveCard</string>
+    <string name="action_search_movie">Search movie</string>
     <string name="action_stop">Stop</string>
     <string name="hello_world">Say the movie</string>
 
