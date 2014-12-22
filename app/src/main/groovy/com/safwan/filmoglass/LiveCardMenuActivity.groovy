@@ -76,10 +76,4 @@ class LiveCardMenuActivity extends Activity {
       }
   }
 
-  @Override
-  void onOptionsMenuClosed(Menu menu) {
-    super.onOptionsMenuClosed(menu)
-    finish()
-  }
-
 }
