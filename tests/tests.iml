@@ -37,6 +37,8 @@
     <orderEntry type="module" module-name="app" exported="" />
     <orderEntry type="library" exported="" name="groovy-2.4.0-beta-3" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-core-0.20.7" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-android-0.20.7" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.8.0" level="project" />
     <orderEntry type="library" exported="" name="spock-core-0.7-groovy-2.0" level="project" />
     <orderEntry type="library" exported="" name="robospock-0.4.4" level="project" />
