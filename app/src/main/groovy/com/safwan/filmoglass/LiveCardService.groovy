@@ -24,17 +24,23 @@ class LiveCardService extends Service {
   @Override
   int onStartCommand(Intent intent, int flags, int startId) {
     if (mLiveCard == null) {
-      mLiveCard = new LiveCard(this, LIVE_CARD_TAG)
-      mLiveCard.setViews(new RemoteViews(packageName, R.layout.live_card))
-
-      // Display the options menu when the live card is tapped.
-      def menuIntent = new Intent(this, LiveCardMenuActivity.class)
-      mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0))
-      mLiveCard.publish(PublishMode.REVEAL)
+      initializeLiveCard()
     } else {
       mLiveCard.navigate()
     }
     START_STICKY
+  }
+
+  private void initializeLiveCard() {
+    mLiveCard = new LiveCard(this, LIVE_CARD_TAG)
+    mLiveCard.setViews(new RemoteViews(packageName, R.layout.live_card))
+    displayOptionsMenuWhenTapped(mLiveCard)
+  }
+
+  private void displayOptionsMenuWhenTapped(LiveCard mLiveCard) {
+    def menuIntent = new Intent(this, LiveCardMenuActivity.class)
+    mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0))
+    mLiveCard.publish(PublishMode.REVEAL)
   }
 
   @Override

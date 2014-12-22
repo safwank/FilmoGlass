@@ -1,10 +1,10 @@
 package com.safwan.filmoglass
-
 import android.app.Activity
 import android.content.Intent
 import android.speech.RecognizerIntent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper
@@ -62,17 +62,17 @@ class LiveCardMenuActivity extends Activity {
 
   private void displayMatchFor(String filmTitle) {
     def filmView = layoutInflater.inflate(R.layout.live_card, null)
+    setContentView(filmView)
     new OmdbProvider().getRating(new Criteria(title: filmTitle))
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe { Film film ->
+        filmView.findViewById(R.id.progress_bar).setVisibility(View.GONE)
         filmView.findViewById(R.id.film_title).asType(TextView).text = film.Title
         filmView.findViewById(R.id.film_year).asType(TextView).text = film.Year.toString()
         filmView.findViewById(R.id.film_rating).asType(TextView).text = film.imdbRating.toString()
 
         def imageView = filmView.findViewById(R.id.film_poster).asType(ImageView)
         UrlImageViewHelper.setUrlDrawable(imageView, film.Poster)
-
-        setContentView(filmView)
       }
   }
 
