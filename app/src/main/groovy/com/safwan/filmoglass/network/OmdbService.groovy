@@ -1,6 +1,6 @@
 package com.safwan.filmoglass.network
 
-import com.safwan.filmoglass.models.Film
+import com.safwan.filmoglass.models.OmdbFilm
 import groovy.transform.CompileStatic
 import retrofit.http.GET
 import retrofit.http.Query
@@ -10,6 +10,6 @@ import rx.Observable
 interface OmdbService {
 
   @GET('/')
-  Observable<Film> getFilm(@Query('t') String title)
+  Observable<OmdbFilm> getFilm(@Query('t') String title)
 
 }
