@@ -1,4 +1,15 @@
+evaluationDependsOn(':app')
+
 apply plugin: 'groovy'
+
+sourceSets {
+  main {
+    groovy {
+      srcDirs '../app/src/main/groovy',
+              '../app/build/generated/source/r/debug'
+    }
+  }
+}
 
 dependencies {
   compile files('libs/gdk.jar')
@@ -11,12 +22,9 @@ dependencies {
   compile 'org.robospock:robospock:0.4.4'
 }
 
-sourceSets {
-  main {
-    groovy {
-      srcDirs '../app/src/main/groovy',
-              '../app/build/generated/source/r/debug'
-    }
+tasks.each {
+  if (it != clean) {
+    it.mustRunAfter clean
   }
 }
 

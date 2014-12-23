@@ -7,7 +7,7 @@ import spock.util.concurrent.BlockingVariable
 
 class OmdbProviderSpec extends RoboSpecification {
 
-  final int FIVE_SECONDS = 5
+  final static int FIVE_SECONDS = 5
   OmdbProvider provider
 
   def setup() {
@@ -20,9 +20,7 @@ class OmdbProviderSpec extends RoboSpecification {
 
     when:
     provider.getRating(new Criteria(title: 'boxtrolls'))
-            .subscribe { film ->
-              result.set(film)
-            }
+            .subscribe { film -> result.set(film) }
 
     then:
     def film = result.get()
@@ -36,9 +34,7 @@ class OmdbProviderSpec extends RoboSpecification {
 
     when:
     provider.getRatings(new Criteria(title: 'boxtrolls'))
-            .subscribe { films ->
-              result.set(films)
-            }
+            .subscribe { films -> result.set(films) }
 
     then:
     def film = result.get().first()
