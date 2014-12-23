@@ -5,9 +5,9 @@ import android.content.Intent
 import android.speech.RecognizerIntent
 import android.view.Menu
 import android.view.MenuItem
+import com.safwan.filmoglass.managers.RatingsAggregator
 import com.safwan.filmoglass.models.Criteria
 import com.safwan.filmoglass.models.Film
-import com.safwan.filmoglass.network.OmdbProvider
 import com.safwan.filmoglass.views.FilmView
 import groovy.transform.CompileStatic
 import rx.android.schedulers.AndroidSchedulers
@@ -16,6 +16,12 @@ import rx.android.schedulers.AndroidSchedulers
 class LiveCardMenuActivity extends Activity {
 
   private static final int SPEECH_REQUEST = 0
+
+  RatingsAggregator aggregator
+
+  LiveCardMenuActivity() {
+    aggregator = new RatingsAggregator()
+  }
 
   @Override
   void onAttachedToWindow() {
@@ -61,7 +67,7 @@ class LiveCardMenuActivity extends Activity {
   private void displayMatchFor(String filmTitle) {
     def filmView = new FilmView(this)
     setContentView(filmView)
-    new OmdbProvider().getRating(new Criteria(title: filmTitle))
+    aggregator.getAverageRating(new Criteria(title: filmTitle))
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe { Film film -> filmView.populateWith(film) }
   }
