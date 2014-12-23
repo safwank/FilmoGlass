@@ -6,7 +6,6 @@ import groovy.transform.CompileStatic
 class Film {
   String Title
   int Year
-  double imdbRating
-  String Metascore
+  String imdbRating
   String Poster
 }
