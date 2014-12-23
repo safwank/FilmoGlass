@@ -25,12 +25,12 @@ class FilmView extends LinearLayout {
   }
 
   def populateWith(Film film) {
-    findViewById(R.id.film_title).asType(TextView).text = film.Title
-    findViewById(R.id.film_year).asType(TextView).text = film.Year.toString()
-    findViewById(R.id.film_rating).asType(TextView).text = film.imdbRating.toString()
+    findViewById(R.id.film_title).asType(TextView).text = film.title
+    findViewById(R.id.film_year).asType(TextView).text = film.year?.toString()
+    findViewById(R.id.film_rating).asType(TextView).text = film.rating
 
     def imageView = findViewById(R.id.film_poster).asType(ImageView)
-    UrlImageViewHelper.setUrlDrawable(imageView, film.Poster)
+    UrlImageViewHelper.setUrlDrawable(imageView, film.poster)
 
     findViewById(R.id.progress_bar).setVisibility(View.GONE)
   }
