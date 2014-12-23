@@ -96,6 +96,14 @@
     <orderEntry type="library" exported="" name="httpclient-4.0.3" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.0.1" level="project" />
     <orderEntry type="library" exported="" name="gdk" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="robolectric-2.4" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="robolectric-annotations-2.4" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="sqlite4java-0.282" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="asm-5.0.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="asm-commons-5.0.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="asm-util-5.0.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="asm-analysis-5.0.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="asm-tree-5.0.1" level="project" />
   </component>
 </module>
 

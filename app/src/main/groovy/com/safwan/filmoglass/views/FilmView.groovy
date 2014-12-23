@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper
 import com.safwan.filmoglass.R
@@ -14,9 +15,15 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class FilmView extends LinearLayout {
 
+  LinearLayout emptyResult, matchingResult
+  TextView title, year, rating
+  ImageView poster
+  ProgressBar progressBar
+
   FilmView(Context context) {
     super(context)
     initializeView()
+    extractFields()
   }
 
   private initializeView() {
@@ -24,15 +31,40 @@ class FilmView extends LinearLayout {
     addView(view)
   }
 
+  private extractFields() {
+    emptyResult = findViewById(R.id.film_empty_result) as LinearLayout
+    matchingResult = findViewById(R.id.film_matching_result) as LinearLayout
+    title = findViewById(R.id.film_title) as TextView
+    year = findViewById(R.id.film_year) as TextView
+    rating = findViewById(R.id.film_rating) as TextView
+    poster = findViewById(R.id.film_poster) as ImageView
+    progressBar = findViewById(R.id.progress_bar) as ProgressBar
+  }
+
   def populateWith(Film film) {
-    findViewById(R.id.film_title).asType(TextView).text = film.title
-    findViewById(R.id.film_year).asType(TextView).text = film.year?.toString()
-    findViewById(R.id.film_rating).asType(TextView).text = film.rating
+    progressBar.setVisibility(View.VISIBLE)
 
-    def imageView = findViewById(R.id.film_poster).asType(ImageView)
-    UrlImageViewHelper.setUrlDrawable(imageView, film.poster)
+    if (film?.isEmpty()) {
+      toggleEmptyResult()
+    } else {
+      toggleMatchingResult()
+      title.text = film.title
+      year.text = film.year?.toString()
+      rating.text = film.rating
+      UrlImageViewHelper.setUrlDrawable(poster, film.poster)
+    }
 
-    findViewById(R.id.progress_bar).setVisibility(View.GONE)
+    progressBar.setVisibility(View.GONE)
+  }
+
+  def toggleEmptyResult() {
+    emptyResult.setVisibility(View.VISIBLE)
+    matchingResult.setVisibility(View.GONE)
+  }
+
+  def toggleMatchingResult() {
+    emptyResult.setVisibility(View.GONE)
+    matchingResult.setVisibility(View.VISIBLE)
   }
 
 }

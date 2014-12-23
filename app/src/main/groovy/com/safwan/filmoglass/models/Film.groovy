@@ -13,4 +13,8 @@ class Film {
   @JsonProperty('imdbRating') String rating
   @JsonProperty('Poster') String poster
 
+  boolean isEmpty() {
+    title == null && year == 0 && rating == null && poster == null
+  }
+
 }

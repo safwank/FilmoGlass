@@ -15,7 +15,7 @@ class OmdbProvider implements RatingProvider {
     new RestAdapter.Builder()
       .setEndpoint('http://www.omdbapi.com')
       .setConverter(new JacksonConverter())
-      .build().create(OmdbService.class).getFilm(criteria.title)
+      .build().create(OmdbService).getFilm(criteria.title)
   }
 
   @Override

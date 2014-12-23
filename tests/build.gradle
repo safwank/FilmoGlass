@@ -20,12 +20,8 @@ dependencies {
   compile 'org.codehaus.groovy:groovy:2.4.0-beta-3'
   compile 'org.spockframework:spock-core:0.7-groovy-2.0'
   compile 'org.robospock:robospock:0.4.4'
-}
 
-tasks.each {
-  if (it != clean) {
-    it.mustRunAfter clean
-  }
+  testCompile 'org.robolectric:robolectric:2.4'
 }
 
 test {

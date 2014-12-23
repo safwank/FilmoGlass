@@ -2,6 +2,7 @@ package com.safwan.filmoglass.network
 
 import com.safwan.filmoglass.models.Criteria
 import com.safwan.filmoglass.models.Film
+import org.robolectric.Robolectric
 import pl.polidea.robospock.RoboSpecification
 import spock.util.concurrent.BlockingVariable
 
@@ -11,6 +12,7 @@ class OmdbProviderSpec extends RoboSpecification {
   OmdbProvider provider
 
   def setup() {
+    Robolectric.fakeHttpLayer.interceptHttpRequests(false)
     provider = new OmdbProvider()
   }
 
