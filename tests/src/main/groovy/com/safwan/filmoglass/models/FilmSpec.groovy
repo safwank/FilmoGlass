@@ -29,11 +29,11 @@ class FilmSpec extends RoboSpecification {
 
     where:
     title       | year | rating | poster
-    'Gone Girl' | 0    | null   | null
-    null        | 2014 | null   | null
-    null        | 0    | '8.88' | null
-    null        | 0    | null   | 'http://movieposters.com/gone_girl.png'
-    'Gone Girl' | 2014 | '8.88' | 'http://movieposters.com/gone_girl.png'
+    'Gone Girl' | 0    | 0      | null
+    null        | 2014 | 0      | null
+    null        | 0    | 8.88   | null
+    null        | 0    | 0      | 'http://movieposters.com/gone_girl.png'
+    'Gone Girl' | 2014 | 8.88   | 'http://movieposters.com/gone_girl.png'
   }
 
 }

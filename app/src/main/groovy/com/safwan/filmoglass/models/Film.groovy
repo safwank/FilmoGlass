@@ -7,11 +7,11 @@ class Film {
 
   String title
   int year
-  String rating
+  float rating
   String poster
 
   boolean isEmpty() {
-    title == null && year == 0 && rating == null && poster == null
+    title == null && year == 0 && rating == 0 && poster == null
   }
 
 }

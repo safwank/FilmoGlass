@@ -20,7 +20,7 @@ class OmdbFilm extends Film {
 
   @JsonProperty('imdbRating')
   void setRating(String rating) {
-    super.rating = rating
+    super.rating = rating?.toFloat()
   }
 
   @JsonProperty('Poster')

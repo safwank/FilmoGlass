@@ -48,9 +48,9 @@ class FilmView extends LinearLayout {
       toggleEmptyResult()
     } else {
       toggleMatchingResult()
-      title.text = film.title
-      year.text = film.year?.toString()
-      rating.text = film.rating
+      title.setText(film.title)
+      year.setText(film.year?.toString())
+      rating.setText(film.rating?.toString())
       UrlImageViewHelper.setUrlDrawable(poster, film.poster)
     }
 

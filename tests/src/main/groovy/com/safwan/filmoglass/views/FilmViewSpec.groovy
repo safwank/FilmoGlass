@@ -36,7 +36,7 @@ class FilmViewSpec extends RoboSpecification {
   def 'populates view with film when film is not empty'() {
     given:
     def film = new Film(title: 'Braveheart', year: 1995,
-      rating: '9.99',
+      rating: 9.99,
       poster: 'http://movieposters.com/braveheart.png')
 
     when:
