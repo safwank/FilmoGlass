@@ -68,4 +68,5 @@ dependencies {
   compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
   compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.4'
   compile 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
+  compile 'cglib:cglib-nodep:3.1'
 }

@@ -17,8 +17,7 @@ class FlixsterProvider implements RatingProvider {
 
   @Override
   Observable<Film> getRating(Criteria criteria) {
-    def films = getFilms(criteria, LIMIT_TO_ONE)
-    films.any() ? films.first() : Observable.empty()
+    getFilms(criteria, LIMIT_TO_ONE).firstOrDefault([])
   }
 
   @Override

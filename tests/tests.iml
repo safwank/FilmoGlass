@@ -43,6 +43,7 @@
     <orderEntry type="library" exported="" name="jackson-core-2.4.4" level="project" />
     <orderEntry type="library" exported="" name="jackson-annotations-2.4.4" level="project" />
     <orderEntry type="library" exported="" name="urlimageviewhelper-1.0.4" level="project" />
+    <orderEntry type="library" exported="" name="cglib-nodep-3.1" level="project" />
     <orderEntry type="library" exported="" name="spock-core-0.7-groovy-2.0" level="project" />
     <orderEntry type="library" exported="" name="robospock-0.4.4" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
