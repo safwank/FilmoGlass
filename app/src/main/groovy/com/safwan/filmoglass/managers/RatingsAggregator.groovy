@@ -23,20 +23,18 @@ class RatingsAggregator {
   }
 
   Observable<Film> getAverageRating(Criteria criteria) {
-    def omdbMatches = omdbProvider.getRatings(criteria)
-    def flixsterMatches = flixsterProvider.getRatings(criteria)
-    Observable.merge(omdbMatches, flixsterMatches)
-      .reduce { List<Film> omdbFilms, List<Film> flixsterFilms ->
-        def omdbFilm = omdbFilms.first()
-        if (!omdbFilm) new Film()
-        def flixsterFilm = flixsterFilms.find { it.title == omdbFilm.title && it.year == omdbFilm.year }
+    def omdbMatch = omdbProvider.getRating(criteria)
+    def flixsterMatch = flixsterProvider.getRating(criteria)
+    omdbMatch.zipWith(flixsterMatch,
+      { Film omdbFilm, Film flixsterFilm ->
+        //TODO: Assume the results match for now
         new Film(
           title: omdbFilm.title,
           year: omdbFilm.year,
-          rating: flixsterFilm ? (omdbFilm.rating + flixsterFilm.rating) / 2 as float : omdbFilm.rating,
+          rating: (omdbFilm.rating + flixsterFilm.rating) / 2 as float,
           poster: omdbFilm.poster
         )
-      }
+      })
   }
 
 }

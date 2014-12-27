@@ -1,10 +1,8 @@
 package com.safwan.filmoglass.network
-
 import com.safwan.filmoglass.models.Criteria
 import com.safwan.filmoglass.models.Film
 import org.robolectric.Robolectric
 import pl.polidea.robospock.RoboSpecification
-import spock.lang.Ignore
 import spock.util.concurrent.BlockingVariable
 
 class FlixsterProviderSpec extends RoboSpecification {
@@ -17,7 +15,6 @@ class FlixsterProviderSpec extends RoboSpecification {
     provider = new FlixsterProvider()
   }
 
-  @Ignore
   def 'gets single rating'() {
     given:
     def result = new BlockingVariable<Film>(FIVE_SECONDS)

@@ -2,7 +2,7 @@ package com.safwan.filmoglass.network
 
 import com.safwan.filmoglass.models.Criteria
 import com.safwan.filmoglass.models.Film
-import com.safwan.filmoglass.models.FlixsterFilm
+import com.safwan.filmoglass.models.FlixsterFilmWrapper
 import groovy.transform.CompileStatic
 import retrofit.RestAdapter
 import retrofit.converter.JacksonConverter
@@ -17,21 +17,21 @@ class FlixsterProvider implements RatingProvider {
 
   @Override
   Observable<Film> getRating(Criteria criteria) {
-    getFilms(criteria, LIMIT_TO_ONE).firstOrDefault([])
+    getFilms(criteria, LIMIT_TO_ONE).map { it.films.first() }
   }
 
   @Override
   Observable<List<Film>> getRatings(Criteria criteria) {
-    getFilms(criteria, LIMIT_TO_FIVE)
+    getFilms(criteria, LIMIT_TO_FIVE).map { it.films }
   }
 
-  private Observable<List<FlixsterFilm>> getFilms(Criteria criteria, int pageLimit) {
+  private Observable<FlixsterFilmWrapper> getFilms(Criteria criteria, int pageLimit) {
     new RestAdapter.Builder()
       .setEndpoint('http://api.rottentomatoes.com/api/public/v1.0')
       .setConverter(new JacksonConverter())
+      .setLogLevel(RestAdapter.LogLevel.FULL)
       .build().create(FlixsterService)
       .getFilms(FLIXSTER_API_KEY, pageLimit, criteria.title) //TODO: move API key to local config
-      .map { it.films }
   }
 
 }

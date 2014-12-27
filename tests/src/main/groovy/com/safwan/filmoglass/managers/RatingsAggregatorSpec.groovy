@@ -26,13 +26,12 @@ class RatingsAggregatorSpec extends RoboSpecification {
     def criteria = new Criteria(title: 'Peaky Blinders')
 
     and:
-    omdbProvider.getRatings(criteria) >> Observable.from([
+    omdbProvider.getRating(criteria) >> Observable.just(
       new Film(title: 'Peaky Blinders', year: 2013, rating: 8.0)
-    ])
-    flixsterProvider.getRatings(criteria) >> Observable.from([
-      new Film(title: 'Peaky Blinders', year: 2013, rating: 9.0),
-      new Film(title: 'The Peaky Blinders II', year: 2014, rating: 9.5)
-    ])
+    )
+    flixsterProvider.getRating(criteria) >> Observable.just(
+      new Film(title: 'Peaky Blinders', year: 2013, rating: 9.0)
+    )
 
     when:
     def result = new BlockingVariable<Film>(ONE_SECOND)
