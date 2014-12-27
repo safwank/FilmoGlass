@@ -1,4 +1,5 @@
 package com.safwan.filmoglass.managers
+
 import com.safwan.filmoglass.models.Criteria
 import com.safwan.filmoglass.models.Film
 import com.safwan.filmoglass.network.FlixsterProvider
