@@ -14,24 +14,87 @@ class RatingsAggregatorSpec extends RoboSpecification {
   RatingsAggregator aggregator
   OmdbProvider omdbProvider
   FlixsterProvider flixsterProvider
+  Criteria criteria
 
   def setup() {
     omdbProvider = Mock(OmdbProvider)
     flixsterProvider = Mock(FlixsterProvider)
     aggregator = new RatingsAggregator(omdbProvider, flixsterProvider)
+    criteria = new Criteria(title: 'Peaky Blinders')
   }
 
-  def 'returns single matching film with average rating'() {
+  def 'returns no match when there are no OMDB and Flixster results'() {
     given:
-    def criteria = new Criteria(title: 'Peaky Blinders')
+    omdbProvider.getRating(criteria) >> Observable.just(new Film())
+    flixsterProvider.getRating(criteria) >> Observable.just(new Film())
 
-    and:
-    omdbProvider.getRating(criteria) >> Observable.just(
-      new Film(title: 'Peaky Blinders', year: 2013, rating: 8.0)
-    )
-    flixsterProvider.getRating(criteria) >> Observable.just(
-      new Film(title: 'Peaky Blinders', year: 2013, rating: 9.0)
-    )
+    when:
+    def result = new BlockingVariable<Film>(ONE_SECOND)
+    aggregator.getAverageRating(criteria).subscribe { result.set(it) }
+
+    then:
+    def film = result.get()
+    film.isEmpty()
+  }
+
+  def 'returns OMDB rating when there is an OMDB result but no Flixster result'() {
+    given:
+    omdbProvider.getRating(criteria) >>
+      Observable.just(new Film(title: 'Peaky Blinders', year: 2013, rating: 8.0))
+    flixsterProvider.getRating(criteria) >> Observable.just(new Film())
+
+    when:
+    def result = new BlockingVariable<Film>(ONE_SECOND)
+    aggregator.getAverageRating(criteria).subscribe { result.set(it) }
+
+    then:
+    def film = result.get()
+    film.title == 'Peaky Blinders'
+    film.year == 2013
+    film.rating == 8.0
+  }
+
+  def 'returns Flixster rating when there is a Flixster result but no OMDB result'() {
+    given:
+    omdbProvider.getRating(criteria) >> Observable.just(new Film())
+    flixsterProvider.getRating(criteria) >>
+      Observable.just(new Film(title: 'Peaky Blinders', year: 2013, rating: 9.0))
+
+    when:
+    def result = new BlockingVariable<Film>(ONE_SECOND)
+    aggregator.getAverageRating(criteria).subscribe { result.set(it) }
+
+    then:
+    def film = result.get()
+    film.title == 'Peaky Blinders'
+    film.year == 2013
+    film.rating == 9.0
+  }
+
+  def 'returns OMDB rating when there are OMDB and Flixster results but they do not match'() {
+    given:
+    omdbProvider.getRating(criteria) >>
+      Observable.just(new Film(title: 'Peaky Blinders', year: 2013, rating: 9.0))
+    flixsterProvider.getRating(criteria) >>
+      Observable.just(new Film(title: 'The Peaky Blinders II', year: 2014, rating: 9.5))
+
+    when:
+    def result = new BlockingVariable<Film>(ONE_SECOND)
+    aggregator.getAverageRating(criteria).subscribe { result.set(it) }
+
+    then:
+    def film = result.get()
+    film.title == 'Peaky Blinders'
+    film.year == 2013
+    film.rating == 9.0
+  }
+
+  def 'returns average rating when there are matching OMDB and Flixster results'() {
+    given:
+    omdbProvider.getRating(criteria) >>
+      Observable.just(new Film(title: 'Peaky Blinders', year: 2013, rating: 8.0))
+    flixsterProvider.getRating(criteria) >>
+      Observable.just(new Film(title: 'Peaky Blinders', year: 2013, rating: 9.0))
 
     when:
     def result = new BlockingVariable<Film>(ONE_SECOND)

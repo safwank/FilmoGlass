@@ -27,14 +27,18 @@ class RatingsAggregator {
     def flixsterMatch = flixsterProvider.getRating(criteria)
     omdbMatch.zipWith(flixsterMatch,
       { Film omdbFilm, Film flixsterFilm ->
-        //TODO: Assume the results match for now
+        if (omdbFilm.isEmpty()) return flixsterFilm
+        if (omdbFilm.title != flixsterFilm.title || omdbFilm.year != flixsterFilm.year) return omdbFilm
+
         new Film(
-          title: omdbFilm.title,
-          year: omdbFilm.year,
-          rating: (omdbFilm.rating + flixsterFilm.rating) / 2 as float,
-          poster: omdbFilm.poster
+          title: omdbFilm.title?:flixsterFilm.title,
+          year: omdbFilm.year?:flixsterFilm.year,
+          rating: [omdbFilm.rating, flixsterFilm.rating]
+            .findAll { it != 0 }
+            .inject { acc, val -> acc == 0 ? val : (acc + val) / 2 } as float,
+          poster: omdbFilm.poster?:flixsterFilm.poster
         )
-      })
+      }).firstOrDefault(new Film())
   }
 
 }

@@ -21,7 +21,7 @@ class FlixsterFilm extends Film {
   @JsonProperty('ratings')
   void setRatings(Map<String, String> ratings) {
     if (!ratings?.isEmpty()) {
-      super.rating = ratings.findAll { it.key?.contains('score') && it.value?.isFloat() }
+      super.rating = ratings.findAll { it.key?.contains('score') && it.value?.isFloat() && it.value != 0 }
         .collect { it.value?.toFloat() / 10 }
         .inject(0) { acc, val -> acc == 0 ? val : (acc + val) / 2 } as float
     }
