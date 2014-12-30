@@ -10,6 +10,7 @@ import com.safwan.filmoglass.models.Criteria
 import com.safwan.filmoglass.models.Film
 import com.safwan.filmoglass.views.FilmView
 import groovy.transform.CompileStatic
+import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 
 @CompileStatic
@@ -17,7 +18,8 @@ class LiveCardMenuActivity extends Activity {
 
   private static final int SPEECH_REQUEST = 0
 
-  RatingsAggregator aggregator
+  private RatingsAggregator aggregator
+  private Subscription subscription
 
   LiveCardMenuActivity() {
     aggregator = new RatingsAggregator()
@@ -67,9 +69,15 @@ class LiveCardMenuActivity extends Activity {
   private void displayMatchFor(String filmTitle) {
     def filmView = new FilmView(this)
     setContentView(filmView)
-    aggregator.getAverageRating(new Criteria(title: filmTitle))
+    subscription = aggregator.getAverageRating(new Criteria(title: filmTitle))
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe { Film film -> filmView.populateWith(film) }
+  }
+
+  @Override
+  protected void onDestroy() {
+    subscription.unsubscribe()
+    super.onDestroy();
   }
 
 }
