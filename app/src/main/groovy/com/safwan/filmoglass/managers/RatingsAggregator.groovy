@@ -33,12 +33,15 @@ class RatingsAggregator {
         new Film(
           title: omdbFilm.title?:flixsterFilm.title,
           year: omdbFilm.year?:flixsterFilm.year,
-          rating: [omdbFilm.rating, flixsterFilm.rating]
-            .findAll { it != 0 }
-            .inject { acc, val -> acc == 0 ? val : (acc + val) / 2 } as float,
+          rating: calculateAverageRating(omdbFilm.rating, flixsterFilm.rating),
           poster: omdbFilm.poster?:flixsterFilm.poster
         )
       }).firstOrDefault(new Film())
+  }
+
+  private float calculateAverageRating(float omdbRating, float flixsterRating) {
+    [omdbRating, flixsterRating].findAll { it != 0 }
+      .inject { acc, val -> acc == 0 ? val : (acc + val) / 2 } as float
   }
 
 }

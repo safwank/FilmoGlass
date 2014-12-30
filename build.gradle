@@ -17,9 +17,3 @@ allprojects {
     jcenter()
   }
 }
-
-tasks.each {
-  if (it != clean) {
-    it.mustRunAfter clean
-  }
-}
