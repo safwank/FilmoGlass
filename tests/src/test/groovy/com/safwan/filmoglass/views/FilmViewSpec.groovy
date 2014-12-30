@@ -64,13 +64,23 @@ class FilmViewSpec extends RoboSpecification {
     matchingResult.visibility == View.GONE
   }
 
-  def 'shows and hides progress bar when populating view'() {
+  def 'shows progress bar'() {
     given:
-    def film = new Film()
+    progressBar.visibility = View.INVISIBLE
+
+    when:
+    view.showProgressBar()
+
+    then:
+    progressBar.visibility == View.VISIBLE
+  }
+
+  def 'hides progress bar'() {
+    given:
     progressBar.visibility == View.VISIBLE
 
     when:
-    view.populateWith(film)
+    view.hideProgressBar()
 
     then:
     progressBar.visibility == View.GONE

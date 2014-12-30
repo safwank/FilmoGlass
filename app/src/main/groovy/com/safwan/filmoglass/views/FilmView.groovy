@@ -42,8 +42,6 @@ class FilmView extends LinearLayout {
   }
 
   def populateWith(Film film) {
-    progressBar.setVisibility(View.VISIBLE)
-
     if (film?.isEmpty()) {
       toggleEmptyResult()
     } else {
@@ -53,7 +51,13 @@ class FilmView extends LinearLayout {
       rating.setText(film.rating?.toString())
       UrlImageViewHelper.setUrlDrawable(poster, film.poster)
     }
+  }
 
+  def showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE)
+  }
+
+  def hideProgressBar() {
     progressBar.setVisibility(View.GONE)
   }
 

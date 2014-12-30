@@ -1,5 +1,4 @@
 package com.safwan.filmoglass
-
 import android.app.Activity
 import android.content.Intent
 import android.speech.RecognizerIntent
@@ -7,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.safwan.filmoglass.managers.RatingsAggregator
 import com.safwan.filmoglass.models.Criteria
-import com.safwan.filmoglass.models.Film
 import com.safwan.filmoglass.views.FilmView
 import groovy.transform.CompileStatic
 import rx.Subscription
@@ -69,9 +67,13 @@ class LiveCardMenuActivity extends Activity {
   private void displayMatchFor(String filmTitle) {
     def filmView = new FilmView(this)
     setContentView(filmView)
+    filmView.showProgressBar()
     subscription = aggregator.getAverageRating(new Criteria(title: filmTitle))
       .observeOn(AndroidSchedulers.mainThread())
-      .subscribe { Film film -> filmView.populateWith(film) }
+      .subscribe {
+        filmView.populateWith(it)
+        filmView.hideProgressBar()
+      }
   }
 
   @Override
